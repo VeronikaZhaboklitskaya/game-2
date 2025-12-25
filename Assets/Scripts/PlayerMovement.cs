@@ -39,10 +39,10 @@ public class PlayerMovement : MonoBehaviour
     {
       isGrounded = true;
     }
+
     if (collision.gameObject.CompareTag("Enemy"))
     {
-      Debug.Log("Game Over");
-      Time.timeScale = 0f;
+      GameManager.instance.TakeDamage(1);
     }
   }
 
