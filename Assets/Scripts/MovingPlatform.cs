@@ -19,8 +19,6 @@ public class MovingPlatform : MonoBehaviour
 
   void FixedUpdate()
   {
-    // 使用 Sin 函数替代 PingPong，产生平滑的上下往复运动
-    // Mathf.Sin 返回 -1 到 1，我们需要将其映射到 0 到 1 
     float sinValue = (Mathf.Sin(Time.fixedTime * speed) + 1f) / 2f;
 
     float timeOffset = sinValue * moveDistance;
