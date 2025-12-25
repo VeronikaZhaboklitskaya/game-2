@@ -1,19 +1,20 @@
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class ItemSpawner : MonoBehaviour
 {
-  public GameObject enemyPrefab;
-  public float spawnInterval = 10f;
+  public GameObject itemPrefab;
+  public float spawnInterval = 12f;
   public float spawnRangeX = 8f;
   public float spawnRangeY = 4f;
 
   public LayerMask groundLayer;
   void Start()
   {
-    InvokeRepeating("SpawnEnemy", 1f, spawnInterval);
+    InvokeRepeating("SpawnItem", 1f, spawnInterval);
   }
 
-  void SpawnEnemy()
+
+  void SpawnItem()
   {
     float randomX = Random.Range(-spawnRangeX, spawnRangeX);
     Vector2 rayOrigin = new Vector2(randomX, 10f);
@@ -23,7 +24,7 @@ public class EnemySpawner : MonoBehaviour
     if (hit.collider != null)
     {
       Vector2 spawnPos = hit.point + new Vector2(0, 0.5f);
-      Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+      Instantiate(itemPrefab, spawnPos, Quaternion.identity);
     }
   }
 }
