@@ -22,7 +22,12 @@ public class PlayerMovement : MonoBehaviour
   private Vector2 platformVelocity;
   private bool onPlatform;
 
-  void Start()
+  private float xPosLastFrame;
+    
+  [SerializeField] private Animator animator; 
+  [SerializeField] private SpriteRenderer spriteRenderer;
+
+    void Start()
   {
     rb = GetComponent<Rigidbody2D>();
     rb.interpolation = RigidbodyInterpolation2D.Interpolate;
@@ -60,6 +65,20 @@ public class PlayerMovement : MonoBehaviour
       }
       jumpPressed = false;
     }
+    float moveInput = Input.GetAxis("Horizontal");
+    rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+
+        if (moveInput != 0)
+        {
+            animator.SetBool("isRunning", true);
+
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
+
+        
   }
 
   void Move()
