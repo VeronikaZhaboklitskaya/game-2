@@ -1,39 +1,48 @@
 using UnityEngine;
-
+using System.Collections;
 public class Enemy : MonoBehaviour
 {
   public float moveSpeed = 2f;
+  public Transform groundCheckPoint;
+  public Transform wallCheckPoint;
   public float detectionDistance = 0.6f;
+
+  float lastFlipTime;
+  float flipCooldown = 0.2f; // 翻转冷却时间
   public LayerMask groundLayer;
 
-  public Vector2 checkOffset = new Vector2(0.5f, -0.5f);
+  int direction = 1;
+  Rigidbody2D rb;
+  bool canDetect;
 
-  private SpriteRenderer sr;
-  private Rigidbody2D rb;
-  private int direction = 1;
-  private float lastFlipTime;
-  private float flipCooldown = 0.3f;
-
-  void Start()
+  IEnumerator Start()
   {
     rb = GetComponent<Rigidbody2D>();
-    sr = GetComponent<SpriteRenderer>();
     rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-    rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
 
-    rb.sleepMode = RigidbodySleepMode2D.StartAwake;
+    yield return null; // 等一帧
+    canDetect = true;
   }
 
   void FixedUpdate()
   {
     rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);
 
-    Vector2 currentCheckPos = (Vector2)transform.position + new Vector2(checkOffset.x * direction, checkOffset.y);
+    if (!canDetect) return;
 
-    bool hasGround = Physics2D.Raycast(currentCheckPos, Vector2.down, detectionDistance, groundLayer);
-    bool hitWall = Physics2D.Raycast(currentCheckPos, Vector2.right * direction, 0.1f, groundLayer);
+    bool hasGround = Physics2D.Raycast(
+        groundCheckPoint.position,
+        Vector2.down,
+        detectionDistance,
+        groundLayer
+    );
 
-    Debug.DrawRay(currentCheckPos, Vector2.down * detectionDistance, hasGround ? Color.green : Color.red);
+    bool hitWall = Physics2D.Raycast(
+        wallCheckPoint.position,
+        Vector2.right * direction,
+        0.2f,
+        groundLayer
+    );
 
     if (!hasGround || hitWall)
     {
@@ -43,12 +52,13 @@ public class Enemy : MonoBehaviour
 
   void Flip()
   {
-    if (Time.time < lastFlipTime + flipCooldown) return;
+    if (Time.time < lastFlipTime + flipCooldown) return; // 冷却中不执行翻转
 
     direction *= -1;
-    sr.flipX = (direction == -1);
-    lastFlipTime = Time.time;
+    Vector3 s = transform.localScale;
+    s.x *= -1;
+    transform.localScale = s;
 
-    rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+    lastFlipTime = Time.time;
   }
 }
