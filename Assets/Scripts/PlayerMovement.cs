@@ -2,11 +2,25 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-  [SerializeField] private float moveSpeed = 8f;
-  [SerializeField] private float jumpForce = 15f;
+  [Header("Movement Settings")]
+  public float moveSpeed = 8f;
+  public float jumpForce = 15f;
+  public float bounceForce = 12f;
+
+  [Header("Detection")]
+  public Transform groundCheck;
+  public float checkRadius = 0.4f;
+  public LayerMask groundLayer;
 
   private Rigidbody2D rb;
   private bool isGrounded;
+  private float moveInput;
+  private bool jumpPressed;
+
+  private Rigidbody2D currentPlatformRb;
+  private Vector2 lastPlatformPos;
+  private Vector2 platformVelocity;
+  private bool onPlatform;
 
   private float xPosLastFrame;
     
@@ -16,17 +30,41 @@ public class PlayerMovement : MonoBehaviour
     void Start()
   {
     rb = GetComponent<Rigidbody2D>();
+    rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+    rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+    rb.gravityScale = 4f;
   }
 
   void Update()
   {
-    Move();
-    Jump();
-    FlipCharacterX();
+    moveInput = Input.GetAxis("Horizontal");
+    if (Input.GetKeyDown(KeyCode.Space)) jumpPressed = true;
+
+    isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
   }
 
-  void Move()
+  void FixedUpdate()
   {
+    if (onPlatform && currentPlatformRb != null)
+    {
+      platformVelocity = (currentPlatformRb.position - lastPlatformPos) / Time.fixedDeltaTime;
+      lastPlatformPos = currentPlatformRb.position;
+    }
+    else
+    {
+      platformVelocity = Vector2.zero;
+    }
+
+    Move();
+
+    if (jumpPressed)
+    {
+      if (isGrounded)
+      {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+      }
+      jumpPressed = false;
+    }
     float moveInput = Input.GetAxis("Horizontal");
     rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
@@ -43,47 +81,57 @@ public class PlayerMovement : MonoBehaviour
         
   }
 
-  void Jump()
+  void Move()
   {
-    if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+    float targetX = (moveInput * moveSpeed) + platformVelocity.x;
+    float targetY = rb.linearVelocity.y;
+
+    if (onPlatform && !jumpPressed && rb.linearVelocity.y <= 0.1f)
     {
-      rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+      targetY = platformVelocity.y - 0.05f;
     }
+
+    rb.linearVelocity = new Vector2(targetX, targetY);
   }
 
-  private void OnCollisionEnter2D(Collision2D collision)
+  private void OnCollisionStay2D(Collision2D collision)
   {
-    if (collision.gameObject.CompareTag("Ground"))
+    if (collision.gameObject.CompareTag("MovingStone"))
     {
-      isGrounded = true;
-    }
-    if (collision.gameObject.CompareTag("Enemy"))
-    {
-      Debug.Log("Game Over");
-      Time.timeScale = 0f;
+      if (collision.contacts[0].normal.y > 0.5f)
+      {
+        currentPlatformRb = collision.rigidbody;
+        if (!onPlatform)
+        {
+          lastPlatformPos = currentPlatformRb.position;
+          onPlatform = true;
+        }
+      }
     }
   }
 
   private void OnCollisionExit2D(Collision2D collision)
   {
-    if (collision.gameObject.CompareTag("Ground"))
+    if (collision.gameObject.CompareTag("MovingStone"))
     {
-      isGrounded = false;
+      onPlatform = false;
+      currentPlatformRb = null;
     }
   }
 
-    private void FlipCharacterX()
+  private void OnCollisionEnter2D(Collision2D collision)
+  {
+    if (collision.gameObject.CompareTag("Enemy"))
     {
-        if (transform.position.x > xPosLastFrame)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else if (transform.position.x < xPosLastFrame)
-        {
-            spriteRenderer.flipX = false;
-        }
-        
-        xPosLastFrame = transform.position.x;
-
+      if (collision.contacts[0].normal.y > 0.5f)
+      {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, bounceForce);
+        Destroy(collision.gameObject);
+      }
+      else
+      {
+        GameManager.instance.TakeDamage(1);
+      }
     }
+  }
 }
