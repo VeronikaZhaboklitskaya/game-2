@@ -2,13 +2,18 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-  public float moveSpeed = 8f;
-  public float jumpForce = 15f;
+  [SerializeField] private float moveSpeed = 8f;
+  [SerializeField] private float jumpForce = 15f;
 
   private Rigidbody2D rb;
   private bool isGrounded;
 
-  void Start()
+  private float xPosLastFrame;
+    
+  [SerializeField] private Animator animator; 
+  [SerializeField] private SpriteRenderer spriteRenderer;
+
+    void Start()
   {
     rb = GetComponent<Rigidbody2D>();
   }
@@ -17,12 +22,25 @@ public class PlayerMovement : MonoBehaviour
   {
     Move();
     Jump();
+    FlipCharacterX();
   }
 
   void Move()
   {
     float moveInput = Input.GetAxis("Horizontal");
     rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+
+        if (moveInput != 0)
+        {
+            animator.SetBool("isRunning", true);
+
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
+
+        
   }
 
   void Jump()
@@ -53,4 +71,19 @@ public class PlayerMovement : MonoBehaviour
       isGrounded = false;
     }
   }
+
+    private void FlipCharacterX()
+    {
+        if (transform.position.x > xPosLastFrame)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (transform.position.x < xPosLastFrame)
+        {
+            spriteRenderer.flipX = false;
+        }
+        
+        xPosLastFrame = transform.position.x;
+
+    }
 }
