@@ -17,8 +17,8 @@ TagManager:
   - Wall
   - Enemy
   - Box
-  - 
-  - 
+  - Player
+  - Item
   - 
   - 
   - 
