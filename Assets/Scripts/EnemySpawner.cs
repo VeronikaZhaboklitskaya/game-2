@@ -6,6 +6,8 @@ public class EnemySpawner : MonoBehaviour
   public float spawnInterval = 2f;
   public float spawnRangeX = 8f;
   public float spawnRangeY = 4f;
+
+  public LayerMask groundLayer;
   void Start()
   {
     InvokeRepeating("SpawnEnemy", 1f, spawnInterval);
@@ -13,11 +15,15 @@ public class EnemySpawner : MonoBehaviour
 
   void SpawnEnemy()
   {
-    Vector2 spawnPos = new Vector2(
-      Random.Range(-spawnRangeX, spawnRangeX),
-      Random.Range(-spawnRangeY, spawnRangeY)
-    );
+    float randomX = Random.Range(-spawnRangeX, spawnRangeX);
+    Vector2 rayOrigin = new Vector2(randomX, 10f);
 
-    Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+    RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, 20f, groundLayer);
+
+    if (hit.collider != null)
+    {
+      Vector2 spawnPos = hit.point + new Vector2(0, 0.5f);
+      Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+    }
   }
 }
