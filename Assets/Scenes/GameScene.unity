@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 28533}
   - component: {fileID: 28535}
   - component: {fileID: 28534}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Box1
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 46993489}
   - component: {fileID: 46993491}
   - component: {fileID: 46993490}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor1 (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 510369017}
   - component: {fileID: 510369019}
   - component: {fileID: 510369018}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor1 (3)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -830,7 +830,7 @@ GameObject:
   - component: {fileID: 764572357}
   - component: {fileID: 764572359}
   - component: {fileID: 764572358}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Box2
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1304,7 +1304,7 @@ GameObject:
   - component: {fileID: 1073993973}
   - component: {fileID: 1073993975}
   - component: {fileID: 1073993974}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor1 (4)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1441,7 +1441,7 @@ GameObject:
   - component: {fileID: 1140548657}
   - component: {fileID: 1140548659}
   - component: {fileID: 1140548658}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor1 (6)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1625,7 +1625,7 @@ GameObject:
   - component: {fileID: 1593057226}
   - component: {fileID: 1593057227}
   - component: {fileID: 1593057228}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1762,7 +1762,7 @@ GameObject:
   - component: {fileID: 1725615329}
   - component: {fileID: 1725615328}
   - component: {fileID: 1725615330}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor1
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1899,7 +1899,7 @@ GameObject:
   - component: {fileID: 1850885197}
   - component: {fileID: 1850885199}
   - component: {fileID: 1850885198}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor1 (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -2036,7 +2036,7 @@ GameObject:
   - component: {fileID: 1980789851}
   - component: {fileID: 1980789853}
   - component: {fileID: 1980789852}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor1 (7)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -2173,7 +2173,7 @@ GameObject:
   - component: {fileID: 2014542657}
   - component: {fileID: 2014542659}
   - component: {fileID: 2014542658}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -2190,7 +2190,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 38, y: -4.6, z: 0}
-  m_LocalScale: {x: 5.6148744, y: 9.39039, z: 1}
+  m_LocalScale: {x: 6.316734, y: 9.39039, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 993262313}
@@ -2289,7 +2289,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.2227216, g: 0.5188679, b: 0.2492269, a: 1}
+  m_Color: {r: 0.19332945, g: 0.18405126, b: 0.8301887, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2312,7 +2312,7 @@ GameObject:
   - component: {fileID: 2101423376}
   - component: {fileID: 2101423379}
   - component: {fileID: 2101423378}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MovingStone
   m_TagString: MovingStone
   m_Icon: {fileID: 0}
@@ -2428,7 +2428,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.8773585, g: 0.80515033, b: 0.56697226, a: 1}
+  m_Color: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
