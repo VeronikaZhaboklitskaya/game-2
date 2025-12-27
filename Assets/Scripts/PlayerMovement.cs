@@ -2,88 +2,117 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-  [SerializeField] private float moveSpeed = 8f;
-  [SerializeField] private float jumpForce = 15f;
+  [Header("Movement Settings")]
+  public float moveSpeed = 8f;
+  public float jumpForce = 15f;
+  public float bounceForce = 12f;
+
+  [Header("Detection")]
+  public Transform groundCheck;
+  public float checkRadius = 0.4f;
+  public LayerMask groundLayer;
 
   private Rigidbody2D rb;
   private bool isGrounded;
+  private float moveInput;
+  private bool jumpPressed;
 
-  private float xPosLastFrame;
-    
-  [SerializeField] private Animator animator; 
-  [SerializeField] private SpriteRenderer spriteRenderer;
+  private Rigidbody2D currentPlatformRb;
+  private Vector2 lastPlatformPos;
+  private Vector2 platformVelocity;
+  private bool onPlatform;
 
-    void Start()
+  void Start()
   {
     rb = GetComponent<Rigidbody2D>();
+    rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+    rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+    rb.gravityScale = 4f;
   }
 
   void Update()
   {
+    moveInput = Input.GetAxis("Horizontal");
+    if (Input.GetKeyDown(KeyCode.Space)) jumpPressed = true;
+
+    isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
+  }
+
+  void FixedUpdate()
+  {
+    if (onPlatform && currentPlatformRb != null)
+    {
+      platformVelocity = (currentPlatformRb.position - lastPlatformPos) / Time.fixedDeltaTime;
+      lastPlatformPos = currentPlatformRb.position;
+    }
+    else
+    {
+      platformVelocity = Vector2.zero;
+    }
+
     Move();
-    Jump();
-    FlipCharacterX();
+
+    if (jumpPressed)
+    {
+      if (isGrounded)
+      {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+      }
+      jumpPressed = false;
+    }
   }
 
   void Move()
   {
-    float moveInput = Input.GetAxis("Horizontal");
-    rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+    float targetX = (moveInput * moveSpeed) + platformVelocity.x;
+    float targetY = rb.linearVelocity.y;
 
-        if (moveInput != 0)
-        {
-            animator.SetBool("isRunning", true);
+    if (onPlatform && !jumpPressed && rb.linearVelocity.y <= 0.1f)
+    {
+      targetY = platformVelocity.y - 0.05f;
+    }
 
-        }
-        else
-        {
-            animator.SetBool("isRunning", false);
-        }
-
-        
+    rb.linearVelocity = new Vector2(targetX, targetY);
   }
 
-  void Jump()
+  private void OnCollisionStay2D(Collision2D collision)
   {
-    if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+    if (collision.gameObject.CompareTag("MovingStone"))
     {
-      rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-    }
-  }
-
-  private void OnCollisionEnter2D(Collision2D collision)
-  {
-    if (collision.gameObject.CompareTag("Ground"))
-    {
-      isGrounded = true;
-    }
-    if (collision.gameObject.CompareTag("Enemy"))
-    {
-      Debug.Log("Game Over");
-      Time.timeScale = 0f;
+      if (collision.contacts[0].normal.y > 0.5f)
+      {
+        currentPlatformRb = collision.rigidbody;
+        if (!onPlatform)
+        {
+          lastPlatformPos = currentPlatformRb.position;
+          onPlatform = true;
+        }
+      }
     }
   }
 
   private void OnCollisionExit2D(Collision2D collision)
   {
-    if (collision.gameObject.CompareTag("Ground"))
+    if (collision.gameObject.CompareTag("MovingStone"))
     {
-      isGrounded = false;
+      onPlatform = false;
+      currentPlatformRb = null;
     }
   }
 
-    private void FlipCharacterX()
+  private void OnCollisionEnter2D(Collision2D collision)
+  {
+    if (collision.gameObject.CompareTag("Enemy"))
     {
-        if (transform.position.x > xPosLastFrame)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else if (transform.position.x < xPosLastFrame)
-        {
-            spriteRenderer.flipX = false;
-        }
-        
-        xPosLastFrame = transform.position.x;
-
+      if (collision.contacts[0].normal.y > 0.5f)
+      {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, bounceForce);
+        Destroy(collision.gameObject);
+      }
+      else
+      {
+        GameManager.instance.TakeDamage(1);
+      }
     }
+  }
 }

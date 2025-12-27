@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Enemy
+  - MovingStone
   layers:
   - Default
   - TransparentFX
@@ -14,11 +15,11 @@ TagManager:
   - Water
   - UI
   - Wall
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Stone
+  - Box
+  - Item
   - 
   - 
   - 

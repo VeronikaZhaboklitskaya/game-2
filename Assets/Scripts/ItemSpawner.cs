@@ -1,29 +1,31 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class EnemySpawner : MonoBehaviour
+public class ItemSpawner : MonoBehaviour
 {
-  public GameObject enemyPrefab;
-  public float spawnInterval = 5f;
+  public GameObject itemPrefab;
+  public float spawnInterval = 12f;
   public LayerMask groundLayer;
-  public LayerMask enemyLayer;
-  public float minEnemyDistance = 2f;
+
+  public LayerMask itemLayer;
+  public float minItemDistance = 1.5f;
 
   private List<Collider2D> platformCache = new List<Collider2D>();
 
   void Start()
   {
     UpdatePlatformCache();
-    InvokeRepeating("SpawnEnemy", 1f, spawnInterval);
+    InvokeRepeating("SpawnItem", 1f, spawnInterval);
   }
 
   void UpdatePlatformCache()
   {
     Collider2D[] platforms = Physics2D.OverlapAreaAll(new Vector2(-200, -200), new Vector2(200, 200), groundLayer);
+    platformCache.Clear();
     platformCache.AddRange(platforms);
   }
 
-  void SpawnEnemy()
+  void SpawnItem()
   {
     if (platformCache.Count == 0) return;
 
@@ -37,11 +39,11 @@ public class EnemySpawner : MonoBehaviour
 
     if (hit.collider != null)
     {
-      Vector3 spawnPos = new Vector3(hit.point.x, hit.point.y + 0.2f, 0f);
+      Vector3 spawnPos = new Vector3(hit.point.x, hit.point.y + 0.5f, 0f);
 
-      if (Physics2D.OverlapCircle(spawnPos, minEnemyDistance, enemyLayer)) return;
+      if (Physics2D.OverlapCircle(spawnPos, minItemDistance, itemLayer)) return;
 
-      Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+      Instantiate(itemPrefab, spawnPos, Quaternion.identity);
     }
   }
 }
