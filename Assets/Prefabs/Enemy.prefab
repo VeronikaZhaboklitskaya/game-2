@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5739696039275363598}
   - component: {fileID: 8956468124492736495}
   - component: {fileID: 4067586019048313198}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -171,12 +171,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   moveSpeed: 2
-  groundCheckPoint: {fileID: 2730021775352758761}
-  wallCheckPoint: {fileID: 7613065158026584888}
   detectionDistance: 0.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  checkOffset: {x: 0.5, y: -0.5}
 --- !u!1 &6530457958001643396
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7613065158026584888}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: WallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2730021775352758761}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
