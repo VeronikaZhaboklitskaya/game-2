@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     rb = GetComponent<Rigidbody2D>();
     rb.interpolation = RigidbodyInterpolation2D.Interpolate;
     rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-    rb.gravityScale = 4f;
+    rb.gravityScale = 5f;
   }
 
   void Update()
@@ -63,16 +63,18 @@ public class PlayerMovement : MonoBehaviour
   }
 
   void Move()
+
   {
-    float targetX = (moveInput * moveSpeed) + platformVelocity.x;
-    float targetY = rb.linearVelocity.y;
+
+    float finalX = (moveInput * moveSpeed) + platformVelocity.x;
+    float finalY = rb.linearVelocity.y;
 
     if (onPlatform && !jumpPressed && rb.linearVelocity.y <= 0.1f)
     {
-      targetY = platformVelocity.y - 0.05f;
+      finalY = platformVelocity.y - 0.05f;
     }
 
-    rb.linearVelocity = new Vector2(targetX, targetY);
+    rb.linearVelocity = new Vector2(finalX, finalY);
   }
 
   private void OnCollisionStay2D(Collision2D collision)

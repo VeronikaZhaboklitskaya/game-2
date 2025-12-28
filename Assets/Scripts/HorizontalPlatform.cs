@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class MovingPlatform : MonoBehaviour
+public class HorizontalPlatform : MonoBehaviour
 {
-  public float moveDistance = 3f;
+  public float moveDistance = 5f;
   public float speed = 2f;
 
   private Rigidbody2D rb;
@@ -19,10 +19,9 @@ public class MovingPlatform : MonoBehaviour
 
   void FixedUpdate()
   {
-    float sinValue = (Mathf.Sin(Time.fixedTime * speed) + 1f) / 2f;
+    float xOffset = Mathf.Sin(Time.fixedTime * speed) * (moveDistance / 2f);
 
-    float timeOffset = sinValue * moveDistance;
-    Vector2 targetPos = startPos + Vector2.up * timeOffset;
+    Vector2 targetPos = startPos + Vector2.right * xOffset;
 
     rb.MovePosition(targetPos);
   }
