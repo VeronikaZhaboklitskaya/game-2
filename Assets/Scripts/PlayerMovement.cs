@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     rb = GetComponent<Rigidbody2D>();
     rb.interpolation = RigidbodyInterpolation2D.Interpolate;
     rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-    rb.gravityScale = 5f;
+    rb.gravityScale = 8f;
   }
 
   void Update()

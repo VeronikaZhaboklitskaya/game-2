@@ -20,9 +20,16 @@ public class ItemSpawner : MonoBehaviour
 
   void UpdatePlatformCache()
   {
-    Collider2D[] platforms = Physics2D.OverlapAreaAll(new Vector2(-200, -200), new Vector2(200, 200), groundLayer);
     platformCache.Clear();
-    platformCache.AddRange(platforms);
+
+    Collider2D[] platforms = FindObjectsByType<Collider2D>(FindObjectsSortMode.None);
+    foreach (var col in platforms)
+    {
+      if (((1 << col.gameObject.layer) & groundLayer) != 0)
+      {
+        platformCache.Add(col);
+      }
+    }
   }
 
   void SpawnItem()
