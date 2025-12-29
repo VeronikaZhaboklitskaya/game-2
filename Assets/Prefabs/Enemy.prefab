@@ -174,7 +174,7 @@ MonoBehaviour:
   detectionDistance: 0.5
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   checkOffset: {x: 0.5, y: -0.5}
 --- !u!1 &6530457958001643396
 GameObject:
