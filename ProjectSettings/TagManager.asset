@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - MovingStone
   - Tree
+  - DeathZone
   layers:
   - Default
   - TransparentFX
