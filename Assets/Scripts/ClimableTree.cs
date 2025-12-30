@@ -1,4 +1,3 @@
-// ClimbableTree.cs (挂在你的树物体上)
 using UnityEngine;
 
 public class ClimbableTree : MonoBehaviour

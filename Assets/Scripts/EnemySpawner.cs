@@ -37,8 +37,7 @@ public class EnemySpawner : MonoBehaviour
 
     Collider2D target = platformCache[Random.Range(0, platformCache.Count)];
 
-    float margin = 1.0f; // 增大边距
-    if (target.bounds.size.x < margin * 2) return; // 如果平台太窄，干脆不生成
+    float margin = 1.0f;
 
     float randomX = Random.Range(target.bounds.min.x + margin, target.bounds.max.x - margin);
 
@@ -48,17 +47,12 @@ public class EnemySpawner : MonoBehaviour
     if (hit.collider != null)
     {
       Vector3 spawnPos = new Vector3(hit.point.x, hit.point.y + 0.5f, 0f);
-
-      // --- 新增：墙壁避障检测 ---
-      // 使用 OverlapCircle 检查生成点周围是否有 groundLayer (也就是墙)
-      // 0.4f 是检测半径，应略小于 margin
       Collider2D wallCheck = Physics2D.OverlapCircle(spawnPos, 0.4f, groundLayer);
-      if (wallCheck != null) return; // 如果周围已经撞到墙了，放弃本次生成
-
-      // 检查附近是否已经有敌人
+      if (wallCheck != null) return;
       if (Physics2D.OverlapCircle(spawnPos, minEnemyDistance, enemyLayer)) return;
 
       Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
     }
   }
+
 }
