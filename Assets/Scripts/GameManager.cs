@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
   public static GameManager instance;
+  AudioManager audioManager;
 
-  [Header("UI References")]
+    [Header("UI References")]
   public GameObject gameOverPanel;
   public int maxHealth = 3;
   public List<Image> hearts;
@@ -21,7 +22,9 @@ public class GameManager : MonoBehaviour
       instance = this;
     else
       Destroy(gameObject);
-  }
+
+    audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
   void Start()
   {
@@ -82,7 +85,11 @@ public class GameManager : MonoBehaviour
     {
       gameOverPanel.SetActive(true);
     }
-  }
+
+    // Play death sound only once
+    if (audioManager != null)
+        audioManager.PlaySFX(audioManager.death);
+    }
 
   public void RestartGame()
   {
