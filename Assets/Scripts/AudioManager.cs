@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip background;
     public AudioClip death;
+    public AudioClip cheesecollect;
 
     private static AudioManager instance;
 

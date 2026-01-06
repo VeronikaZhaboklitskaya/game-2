@@ -4,10 +4,16 @@ public class Item : MonoBehaviour
 {
   // public int scoreValue = 1;
   public int healValue = 1;
+  AudioManager audioManager;
 
-  Vector3 startPos;
+    Vector3 startPos;
 
-  void Start()
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
+    void Start()
   {
     startPos = transform.localPosition;
   }
@@ -24,7 +30,8 @@ public class Item : MonoBehaviour
     {
       // ScoreManager.instance.AddScore(scoreValue);
       GameManager.instance.Heal(healValue);
-
+      if(audioManager != null)
+                audioManager.PlaySFX(audioManager.cheesecollect);
       Destroy(gameObject);
     }
   }
