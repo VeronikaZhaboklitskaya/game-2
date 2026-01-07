@@ -7212,6 +7212,8 @@ MonoBehaviour:
   background: {fileID: 8300000, guid: 0869bcc8afadcbd4182169d7dc3e6484, type: 3}
   death: {fileID: 8300000, guid: c3037be03e73f5144bba67da93356fda, type: 3}
   cheesecollect: {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
+  takedamage: {fileID: 8300000, guid: d8d04c6f80a1140db85ede568dab1f51, type: 3}
+  hitfromabove: {fileID: 8300000, guid: 7478151cf36724a7dada558f746c3633, type: 3}
 --- !u!4 &985877281
 Transform:
   m_ObjectHideFlags: 0

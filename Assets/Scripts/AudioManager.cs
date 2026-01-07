@@ -8,6 +8,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip background;
     public AudioClip death;
     public AudioClip cheesecollect;
+    public AudioClip takedamage;
+    public AudioClip hitfromabove;
 
     private static AudioManager instance;
 

@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
   {
     if (isGameOver) return;
     currentHealth -= amount;
+    if (audioManager != null)
+            audioManager.PlaySFX(audioManager.takedamage);
     if (currentHealth <= 0)
     {
       GameOver();

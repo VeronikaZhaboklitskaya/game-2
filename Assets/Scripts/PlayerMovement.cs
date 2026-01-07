@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     private float xPosLastFrame;
+    AudioManager audioManager;
 
 
     void Start()
@@ -39,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         rb.gravityScale = 8f;
         originalGravityScale = rb.gravityScale;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     void Update()
@@ -222,7 +224,13 @@ public class PlayerMovement : MonoBehaviour
             if (collision.contacts[0].normal.y > 0.5f)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, bounceForce);
+                if (audioManager != null)
+                {
+                    audioManager.PlaySFX(audioManager.hitfromabove);
+                }
+                    
                 Destroy(collision.gameObject);
+
             }
             else
             {
