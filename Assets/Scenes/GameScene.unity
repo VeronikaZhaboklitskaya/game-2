@@ -5574,6 +5574,7 @@ GameObject:
   - component: {fileID: 769750583}
   - component: {fileID: 769750584}
   - component: {fileID: 769750585}
+  - component: {fileID: 769750586}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -5628,7 +5629,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -3829810386660573452, guid: 609a97d228c956543aab2d72cec4c116, type: 3}
+  m_Sprite: {fileID: 2861109558772521019, guid: 91b296aef6041994d95933f792152811, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5738,17 +5739,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.25484174, y: -0.2424264}
+  m_Offset: {x: -0.0058859587, y: -1.4042178}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.37, y: 0.5}
     oldSize: {x: 3.75, y: 3.75}
     newSize: {x: 2.97, y: 3.08}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.7666492, y: 2.6495}
+  m_Size: {x: 1.1069481, y: 0.21527123}
   m_EdgeRadius: 0
 --- !u!114 &769750585
 MonoBehaviour:
@@ -5773,6 +5774,43 @@ MonoBehaviour:
   climbSpeed: 5
   animator: {fileID: 769750583}
   spriteRenderer: {fileID: 769750578}
+--- !u!70 &769750586
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769750577}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.01610859, y: -0.15905534}
+  m_Size: {x: 1.6062294, y: 2.4360776}
+  m_Direction: 0
 --- !u!1 &780583754
 GameObject:
   m_ObjectHideFlags: 0
