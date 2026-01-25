@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip cheesecollect;
     public AudioClip takedamage;
     public AudioClip hitfromabove;
+    public AudioClip finishlevel;
 
     private static AudioManager instance;
 
