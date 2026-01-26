@@ -99,13 +99,18 @@ public class GameManager : MonoBehaviour
     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
   }
 
-    public void NextLevel()
-    {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
-    }
+   public void MainMenuButton()
+   {
+       SceneManager.LoadScene("MainMenu");
+   }
 
-    public void LoadScene(string sceneName)
-    {
-        SceneManager.LoadSceneAsync(sceneName);
-    }
+  public void NextLevel()
+  {
+      SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+  }
+
+  public void LoadScene(string sceneName)
+  {
+      SceneManager.LoadSceneAsync(sceneName);
+  }
 }
